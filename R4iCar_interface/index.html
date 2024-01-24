@@ -1,0 +1,304 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>AGROBOT</title>
+    <style>
+        .glass-container{
+          height: 100%;
+          justify-content: space-between;
+          display: flex;
+          grid-template-columns: 20rem 20rem 20rem;
+          max-width: 100%;
+          background: #3c3d42;
+          padding: 20px;
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+          backdrop-filter: blur(5.6px);
+          -webkit-backdrop-filter: blur(1.6px);
+      }
+      
+      #camstream {
+        border-width: 2rem;
+        border-radius: 5%;
+        align-items: center;
+      }
+                      /** Range Input Styles **/
+                      input[type="range"] {
+                      -webkit-appearance: none;
+                      appearance: none;
+                      background: transparent;
+                      cursor: pointer;
+                      width: 15rem;
+                      margin: 2rem;
+                      }
+      
+                      /* slider track */
+                      input[type="range"]::-webkit-slider-runnable-track {
+                      background-image: linear-gradient(to right, rgb(196, 135, 135), rgb(0, 255, 21));
+                      border-radius: 40%;
+                      height: 10px; 
+                      animation:animate 5s ease-in infinite; 
+                      }
+      
+                      /* slider thumb */
+                      input[type="range"]::-webkit-slider-thumb {
+                      -webkit-appearance: none; /* Override default look */
+                      appearance: none;
+                      margin-top: -12px; /* Centers thumb on the track */
+      
+                      /* /custom styles/ */
+                      background-color:  rgb(255, 255, 255);
+                      height: 2rem;
+                      width: 1rem;
+                      }
+      
+                      input[type="range"]:focus::-webkit-slider-thumb {   
+                      border: 1px solid rgb(183,116,162);
+                      outline: 3px solid rgb(183,205,64);
+                      outline-offset: 0.125rem; 
+                      }
+                      
+      .image-container{
+        width: 100%;
+      }
+      
+      .left {
+        padding-top: 18%;
+        margin-left: 1rem;
+        width: 25%;
+        align-items: center;
+        /* margin-left: -4rem;
+        margin-top: 10rem;
+        display: flex;
+        flex-direction: column; */
+      }
+      
+      
+
+      .right {
+        /* 
+        margin-left: 12rem;
+        margin-top: 9rem;
+        display: flex;
+        flex-direction: column; */
+        padding-left: 15vh;
+        padding-top: 20%;
+        width: 25%;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .middle{
+        width: 70%;
+        padding: 1rem;
+        padding-top: 8%;
+        align-items: center;
+        justify-content: space-between;
+        /* margin-left: 3rem;
+        padding-left: -3rem;
+        width: 15rem; */
+      }
+      .middle-top{
+        padding-left: 18%;
+        margin-top: -4rem;
+      }
+      .middle-bottom{
+        padding-left: 18%;
+        margin-bottom: -2rem;
+      }
+      .middle-middle{
+        padding: 1rem;
+        align-items: center;
+        justify-content: space-between;
+        /* margin-left: 3rem;
+        padding-left: -3rem;
+        width: 15rem; */
+      }
+      .button-container {
+          align-items: center;
+          padding: 1rem;
+      }
+      .right-spray{
+        margin-left: 4vh;
+        margin-top: -3vh;
+        margin-bottom: 4vh;
+        border-radius: 16px;
+        width: 6vw;
+        height: 7vh;
+        background-color: #9ccd62;
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 18px;
+        font-weight: bolder;
+        text-align: center;
+        padding-bottom: 5rem;
+        box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        & :hover{
+          background-color: #83aa53;
+        }
+      }
+      .left-spray{
+        border-radius: 16px;
+        width: 6vw;
+        height: 7vh;
+        background-color: #9ccd62;
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 18px;
+        font-weight: bolder;
+        text-align: center;
+        padding-bottom: 4rem;
+        box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        & :hover{
+          background-color: #83aa53;
+        }
+        padding-bottom: 5rem;
+      }
+      .button-styles {
+        padding-top: 10px;
+        margin-bottom: 10px;
+        font-style: bold;
+        font-size: 20px;
+      }
+      .button-a {
+        border-top: 0.08vw solid #9ccd62;
+          border-bottom: 5.5vw solid #9ccd62;
+          border-right: 5vw solid transparent;
+          border-left:  5vw solid transparent;
+          &:hover {
+            border-bottom: 5.5vw solid #c3ff7a;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+          }
+          margin-bottom: 0.5rem;
+          outline: none;
+          background: #3c3d42;
+          cursor: pointer;
+      }
+      .button-b {
+          border-left: 0.08vw solid #9ccd62;
+          border-top: 5vw solid transparent;
+          border-bottom: 5vw solid transparent;
+          border-right: 5.5vw solid #9ccd62;
+          &:hover {
+            border-right: 5.5vw solid #c3ff7a;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+          }
+          margin-top: 10vh;
+          outline: none;
+          background: #3c3d42;
+          cursor: pointer;
+      }
+      .button-c {
+          border-width: 5px;
+          cursor: pointer;
+          margin-left: 1rem;
+          height: 50px;
+          width: 90px;
+          &:hover {
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+          }
+          outline: none;
+          background: rgb(194, 192, 192);
+      }
+      .button-d {
+          border-right: 0.08vw solid #9ccd62;
+          border-top: 5vw solid transparent;
+          border-bottom: 5vw solid transparent;
+          border-left: 5.5vw solid #9ccd62;
+          &:hover {
+            border-left: 5.5vw solid #c3ff7a;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+          }
+          margin-top: 1rem;
+          margin-left: 0.5rem;
+          background: #3c3d42;
+          cursor: pointer;
+      }
+      .button-e { 
+          border-right: 5vw solid transparent;
+          border-left:  5vw solid transparent;
+          border-top: 5.5vw solid #9ccd62;
+          border-bottom: 0.08vw solid #9ccd62;
+          &:hover {
+            border-top: 5.5vw solid #c3ff7a;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+          }
+          margin-bottom: 0.5rem;
+          background: #3c3d42;
+          cursor: pointer;
+      }
+      
+      @keyframes animate {
+        0%{
+          background-position: 0 50%;
+        }  
+        50%{
+          background-position: 100% 50%;
+        } 
+        100%{
+          background-position: 0 50%;
+        } 
+      }
+      </style>
+</head>
+
+<body>
+  <div class="glass-container">
+        <div class="left">
+            <div class="top-left">
+              <button class="left-spray" id="spray_left"onmousedown="toggleCheckbox('spray_left');" ontouchstart="toggleCheckbox('spray_left');">
+                <p class="button-styles">Left Spray </p>
+              </button>
+            </div>
+            <button class="button-b" id="turnleft"onmousedown="toggleCheckbox('left');" ontouchstart="toggleCheckbox('left');" onmouseup="toggleCheckbox('stop');" ontouchend="toggleCheckbox('stop');"></button>
+            <!-- <button class="button-c" id="stop"
+            onclick="fetch(document.location.origin+'/control?var=car&val=3');">Stop</button> -->
+            <button class="button-d" id="turnright" ontouchstart="fetch(document.location.origin+'/control?var=car&val=4');"
+                ontouchend="fetch(document.location.origin+'/control?var=car&val=3');"onmousedown="toggleCheckbox('right');" ontouchstart="toggleCheckbox('right');" onmouseup="toggleCheckbox('stop');" ontouchend="toggleCheckbox('stop');"></button>
+        </div>
+        <div class="middle">
+            <div class="middle-top">
+              <p>AGROBOT</p>
+                <!-- <label class="label">Flash</label>
+                <input type="range" class="range" id="flash" min="0" max="255" value="0"
+                    onchange="try{fetch(document.location.origin+'/control?var=flash&val='+this.value);}catch(e){}"> -->
+            </div>
+            <div class="middle-middle">
+                <div class="image-container"> <img id="camstream" src="./images/high-angle-farmland-view.jpg" style='width:100%;'></div>
+            </div>
+            <div class="middle-bottom">
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+                <!-- <label class="label">Speed</label>
+                <input type="range" class="range" id="speed" min="0" max="255" value="255"
+                    onchange="try{fetch(document.location.origin+'/control?var=speed&val='+this.value);}catch(e){}"> -->
+            <script>
+                // window.onload = document.getElementById("camstream").src = window.location.href.slice(0, -1) + ":81/stream";
+            </script>
+            </div>
+        </div>
+        <div class="right">
+                <div class="top-left">
+                  <button class="right-spray" id="spray_right" onmousedown="toggleCheckbox('spray_right');" ontouchstart="toggleCheckbox('spray_right');" ontouchstart="fetch(document.location.origin+'/control?var=car&val=4');">
+                    <p class="button-styles">Right Spray </p>
+                  </button>
+                </div>
+                <button class="button-a" id="forward" ontouchstart="fetch(document.location.origin+'/control?var=car&val=1');"
+                    ontouchend="fetch(document.location.origin+'/control?var=car&val=3');"onmousedown="toggleCheckbox('forward');" ontouchstart="toggleCheckbox('forward');" onmouseup="toggleCheckbox('stop');" ontouchend="toggleCheckbox('stop');"></button>
+                <button class="button-e" id="backward" ontouchstart="fetch(document.location.origin+'/control?var=car&val=5');"
+                    ontouchend="fetch(document.location.origin+'/control?var=car&val=3');"onmousedown="toggleCheckbox('backward');" ontouchstart="toggleCheckbox('backward');" onmouseup="toggleCheckbox('stop');" ontouchend="toggleCheckbox('stop');"></button>
+        </div>
+  </div>
+</body>
+
+</html>
